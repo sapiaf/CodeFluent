@@ -1,6 +1,7 @@
 package it.francescosapia.codefluent.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -14,11 +15,14 @@ public class Flashcard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String front;
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
     private String back;
     private LocalDate creationDate;
     private LocalDate dueDate;
     @ManyToOne
     @JoinColumn(name = "deck_id")
+    @JsonIgnore
     private Deck deck;
     @ManyToMany
     @JoinTable(
@@ -26,6 +30,7 @@ public class Flashcard {
             joinColumns = @JoinColumn(name = "flashcard_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
+    @JsonIgnore
     private Set<Tag> tags = new HashSet<>();
 
     public Integer getId() {

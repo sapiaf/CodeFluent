@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/head.html :: head('CodeFluent')"></head>
+<body>
+    <!-- Navbar  -->
+    <nav th:replace="fragments/navbar.html :: navbar"></nav>
+    <!-- Main -->
+    <main class="container d-flex flex-column justify-content-center align-items-center">
+        <div class="row d-flex flex-column justify-content-center align-items-center">
+            <div class="col">
+            </div>
+            <div class="col">
+                <p class="d-flex justify-content-center" id="frontCard">Flashcard 1 (FRONT)</p>
+            </div>
+            <div class="col" style="display: none;">
+                <p class="d-flex justify-content-center" id="backCard">Flashcard 1 (BACK)</p>
+            </div>
+            <div class="col d-flex justify-content-center" id="buttons">
+                <button class="btn btn-primary btn-lg" id="showAnswer" autofocus="">Show Answer</button>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer th:replace="fragments/footer.html :: footer"></footer>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

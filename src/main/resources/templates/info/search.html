@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/head.html :: head('CodeFluent')"></head>
+<body>
+<!-- Navbar  -->
+<nav th:replace="fragments/navbar.html :: navbar"></nav>
+<!-- Main -->
+<main class="container d-flex justify-content-center align-items-center flex-column">
+    <h1>Search</h1>
+    <form class="d-flex" role="search">
+        <div class="input-group">
+            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch">
+            <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+        </div>
+    </form>
+</main>
+<!-- Footer -->
+<footer th:replace="fragments/footer.html :: footer"></footer>
+</body>
+</html>
