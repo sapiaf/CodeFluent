@@ -13,6 +13,7 @@ public class Deck {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    private String description;
     @OneToMany(mappedBy = "deck")
     private List<Flashcard> flashcards = new ArrayList<>();
     @ManyToOne
@@ -48,5 +49,13 @@ public class Deck {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

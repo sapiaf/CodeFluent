@@ -5,21 +5,24 @@
         <!-- Navbar  -->
         <nav th:replace="fragments/navbar.html :: navbar"></nav>
         <!-- Main -->
-        <main class="container">
-            <div class="row light-bottom-border current" th:each="deck : ${decks}">
-                <div class="col-7 col-sm-8 col-lg-9">
-                    <p th:text="${deck.name}"></p>
-                </div>
-                <div class="col-1"></div>
-                <div class="col-4 col-sm-3 col-lg-2">
-                    <div class="dropdown">
-                        <div style="float: right;">
-                            <button class="btn btn-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Actions
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="deckOptions">
-                                <button class="dropdown-item" type="button">Rename</button>
-                                <button class="dropdown-item" type="button">Delete</button>
+        <main class="container-xl mt-5">
+            <div class="row light-bottom-border">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-12" th:each="deck : ${decks}">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="card-title" th:text="${deck.name}"></h5>
+                                <p th:text="${deck.flashcards.size()} + ' cards'"></p>
+                            </div>
+                            <p class="card-text" th:text="${deck.description}"></p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <a class="btn btn-secondary mr-1" href="/decks/1">Edit</a>
+                                    <a class="btn btn-primary" href="/decks/1/study">Study</a>
+                                </div>
+                                <div>
+                                    <a href="#" class="btn btn-danger">Delete</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -27,6 +30,7 @@
             </div>
         </main>
         <!-- Footer -->
+
         <footer th:replace="fragments/footer.html :: footer"></footer>
     </body>
 </html>
