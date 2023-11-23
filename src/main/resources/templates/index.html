@@ -17,11 +17,15 @@
                             <p class="card-text" th:text="${deck.description}"></p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <a class="btn btn-secondary mr-1" href="/decks/1">Edit</a>
-                                    <a class="btn btn-primary" href="/decks/1/study">Study</a>
+                                    <a class="btn btn-secondary mr-1" th:href="@{/decks/{id}(id=${deck.id})}">View</a>
+                                    <a class="btn btn-primary" th:href="@{/decks/study/{id}(id=${deck.id})}">Study</a>
                                 </div>
                                 <div>
-                                    <a href="#" class="btn btn-danger">Delete</a>
+                                    <form th:action="@{/decks/delete/{id}(id=${deck.id})}" method="post">
+                                        <button type="submit" class="btn btn-danger">
+                                            Delete
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -30,7 +34,6 @@
             </div>
         </main>
         <!-- Footer -->
-
         <footer th:replace="fragments/footer.html :: footer"></footer>
     </body>
 </html>

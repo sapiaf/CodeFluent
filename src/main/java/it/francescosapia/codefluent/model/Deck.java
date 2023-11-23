@@ -14,7 +14,7 @@ public class Deck {
     private Integer id;
     private String name;
     private String description;
-    @OneToMany(mappedBy = "deck")
+    @OneToMany(mappedBy = "deck", cascade = CascadeType.ALL)
     private List<Flashcard> flashcards = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "user_id")

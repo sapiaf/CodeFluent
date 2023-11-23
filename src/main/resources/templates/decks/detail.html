@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/head.html :: head('CodeFluent')"></head>
+<body>
+<!-- Navbar  -->
+<nav th:replace="fragments/navbar.html :: navbar"></nav>
+<!-- Main -->
+<main class="container-xl mt-5">
+    <div class="row light-bottom-border">
+        <div class="col-sm-12 p-0">
+            <div class="card border-0">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${deck.name}"></h5>
+                    <p class="card-text" th:text="${deck.description}"></p>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <a class="btn btn-secondary mr-1" th:href="@{/decks/edit/{id}(id=${deck.id})}">Edit</a>
+                            <a class="btn btn-primary mr-1">Study</a>
+                            <a class="btn btn-primary fw-bold">+ Add Cards</a>
+                        </div>
+                        <div>
+                            <form th:action="@{/decks/delete/{id}(id=${deck.id})}" method="post">
+                                <button type="submit" class="btn btn-danger">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <h1>Cards</h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-6 col-12" th:each="card : ${cards}">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <p class="card-text" th:text="${card.front}"></p>
+                    <div class="d-flex justify-content-end">
+                        <a th:href="@{cards/{id}(id=${card.id})}" class="btn btn-secondary me-1">Edit</a>
+                        <form th:action="@{/decks/delete/{id}(id=${card.id})}" method="post">
+                            <button type="submit" class="btn btn-danger">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Footer -->
+
+<footer th:replace="fragments/footer.html :: footer"></footer>
+</body>
+</html>

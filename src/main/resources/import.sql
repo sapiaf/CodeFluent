@@ -3,6 +3,12 @@ INSERT INTO roles(name) VALUES('USER');
 INSERT INTO users (registration_date, email, password, role_id) VALUES ('2023-01-01', 'john@email.com', '{noop}john', 1);
 INSERT INTO users (registration_date, email, password, role_id) VALUES ('2023-05-05', 'jane@email.com', '{noop}jane', 2);
 
+INSERT INTO tags (name) VALUES ('HTML');
+INSERT INTO tags (name) VALUES ('CSS');
+INSERT INTO tags (name) VALUES ('JavaScript');
+INSERT INTO tags (name) VALUES ('Java');
+INSERT INTO tags (name) VALUES ('Spring Framework');
+
 
 INSERT INTO decks (name, user_id, description) VALUES ('HTML', 1, 'A deck focused on Hypertext Markup Language (HTML), the standard language used to create web pages. It covers the structure and elements used in web development.');
 INSERT INTO decks (name, user_id, description) VALUES ('CSS', 1, 'This deck concentrates on Cascading Style Sheets (CSS), a language used for describing the presentation of a document written in HTML. It includes styling elements, layouts, and design techniques.');
