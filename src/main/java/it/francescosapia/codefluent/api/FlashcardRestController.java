@@ -60,4 +60,15 @@ public class FlashcardRestController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Flashcard with id " + id + " not found");
         }
     }
+    @PutMapping("/{id}/updateDueDate")
+    public Flashcard updateDueDate(@PathVariable("id") Integer id, @RequestParam("difficulty") String difficulty) {
+        Optional<Flashcard> flashcard = flashcardRepository.findById(id);
+        if (flashcard.isPresent()) {
+            Flashcard updatedFlashcard = flashcard.get();
+            updatedFlashcard.updateDueDate(difficulty);
+            return flashcardRepository.save(updatedFlashcard);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Flashcard with id " + id + " not found");
+        }
+    }
 }

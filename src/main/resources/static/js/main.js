@@ -15,12 +15,23 @@ document.addEventListener('DOMContentLoaded', async function () {
 
                 const difficulty = event.target.dataset.difficulty;
 
+                const flashcardId = flashcards[currentCardIndex].id
+
+                fetch(`/api/v1/flashcards/${flashcardId}/updateDueDate?difficulty=${difficulty}`, {
+                    method: 'PUT',
+                })
+                .then(response => {
+                    console.log('Due date updated for difficulty:', difficulty);
+                })
+                .catch(error => {
+                    console.error('Error updating due date:', error);
+                });
 
                 currentCardIndex++;
                 if (currentCardIndex < flashcards.length) {
                     showFrontOfCard(currentCardIndex, flashcards);
                 } else {
-                   document.querySelector('.card-body').innerHTML = `<p class="card-text">Le flashcard sono finite!</p>`
+                    document.querySelector('.card-body').innerHTML = `<p class="card-text">Le flashcard sono finite!</p>`;
                 }
             }
         });
