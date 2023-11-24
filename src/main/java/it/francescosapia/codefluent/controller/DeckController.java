@@ -96,4 +96,19 @@ public class DeckController {
         return "redirect:/";
     }
 
+    @GetMapping("/study/{deckId}")
+    public String study(@PathVariable("deckId") Integer id, Model model) {
+        Optional<Deck> deckOptional = deckRepository.findById(id);
+
+        if (deckOptional.isPresent()) {
+            Deck deck = deckOptional.get();
+            model.addAttribute("deck", deck);
+            model.addAttribute("cards", deck.getFlashcards());
+            return "decks/study";
+
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

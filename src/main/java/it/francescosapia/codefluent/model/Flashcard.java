@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ public class Flashcard {
     @Column(columnDefinition = "LONGTEXT")
     private String back;
     private LocalDate creationDate;
-    private LocalDate dueDate;
+    private LocalDateTime dueDate;
     @ManyToOne
     @JoinColumn(name = "deck_id")
     @JsonIgnore
@@ -65,11 +66,11 @@ public class Flashcard {
         this.creationDate = creationDate;
     }
 
-    public LocalDate getDueDate() {
+    public LocalDateTime getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDate dueDate) {
+    public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
     }
 
@@ -87,5 +88,15 @@ public class Flashcard {
 
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
+    }
+
+    public void updateDueDate(String difficulty) {
+        if (difficulty.equals("easy")) {
+            this.dueDate = this.dueDate.plusDays(3);
+        } else if (difficulty.equals("medium")) {
+            this.dueDate = this.dueDate.plusDays(2);
+        } else if (difficulty.equals("hard")) {
+            this.dueDate = this.dueDate.plusDays(1);
+        }
     }
 }

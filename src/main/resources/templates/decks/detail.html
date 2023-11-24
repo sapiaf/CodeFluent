@@ -15,8 +15,8 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <a class="btn btn-secondary mr-1" th:href="@{/decks/edit/{id}(id=${deck.id})}">Edit</a>
-                            <a class="btn btn-primary mr-1">Study</a>
-                            <a class="btn btn-primary fw-bold">+ Add Cards</a>
+                            <a class="btn btn-primary mr-1" th:href="@{/decks/study/{id}(id=${deck.id})}">Study</a>
+                            <a class="btn btn-primary fw-bold" th:href="@{/cards/create}">+ Add Cards</a>
                         </div>
                         <div>
                             <form th:action="@{/decks/delete/{id}(id=${deck.id})}" method="post">
@@ -39,8 +39,8 @@
                 <div class="card-body">
                     <p class="card-text" th:text="${card.front}"></p>
                     <div class="d-flex justify-content-end">
-                        <a th:href="@{cards/{id}(id=${card.id})}" class="btn btn-secondary me-1">Edit</a>
-                        <form th:action="@{/decks/delete/{id}(id=${card.id})}" method="post">
+                        <a th:href="@{/cards/edit/{id}(id=${card.id})}" class="btn btn-secondary me-1">Edit</a>
+                        <form th:action="@{/cards/delete/{id}(id=${card.id})}" method="post">
                             <button type="submit" class="btn btn-danger">
                                 Delete
                             </button>

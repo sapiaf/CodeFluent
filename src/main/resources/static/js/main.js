@@ -1,78 +1,64 @@
-const showAnswer = document.getElementById('showAnswer');
-const buttons = document.getElementById('buttons');
-
-showAnswer.addEventListener('click', showButtons)
-
-function showButtons() {
-  showAnswer.style.display = 'none'
-  buttons.innerHTML = `
-  <div class="d-flex justify-content-center">
-                    <div>
-                        <div class="text-center">&lt;10m</div>
-                        <button class="btn btn-primary btn-lg m-1 btn-difficulty">
-                            Again
-                        </button>
-                    </div>
-                    <div>
-                        <div class="text-center">&lt;15m</div>
-                        <button class="btn btn-primary btn-lg m-1 btn-difficulty">
-                            Hard
-                        </button>
-                    </div>
-                    <div>
-                        <div class="text-center">1d</div>
-                        <button class="btn btn-primary btn-lg m-1 btn-difficulty" autofocus="">
-                            Good
-                        </button>
-                    </div>
-                    <div>
-                        <div class="text-center">2d</div>
-                        <button class="btn btn-primary btn-lg m-1 btn-difficulty">
-                            Easy
-                        </button>
-                    </div>
-                </div>
-  `
-  document.getElementById('backCard').parentNode.style.display = 'block';
-}
-
 let flashcards = [];
 let currentCardIndex = 0;
 
-function getFlashcards() {
-  fetch('http://localhost:8080/api/v1/flashcards')
-    .then(res => res.json())
-    .then(data => {
-      flashcards = data;
-      displayCard();
-    })
-    .catch(error => console.error('Si è verificato un errore:', error));
-}
+document.addEventListener('DOMContentLoaded', async function () {
+    const deckId = document.getElementById('deckId').value;
+    flashcards = await getFlashcards(deckId);
 
-function displayCard() {
-  const currentCard = flashcards[currentCardIndex];
-  document.getElementById('frontCard').innerHTML = currentCard.front;
-  document.getElementById('backCard').innerHTML = currentCard.back;
-}
+    if (flashcards.length > 0) {
+        showFrontOfCard(currentCardIndex, flashcards);
 
-function onDifficultyClick(difficultyIndex) {
-  flashcards.splice(currentCardIndex, 1);
+        document.getElementById('buttons').addEventListener('click', function (event) {
+            if (event.target.id === 'showAnswer') {
+                showBackOfCard(currentCardIndex, flashcards);
+            } else if (event.target.classList.contains('difficulty')) {
 
-  if (flashcards.length > 0) {
-    currentCardIndex = currentCardIndex % flashcards.length;
-    displayCard();
-  } else {
-    console.log('Hai completato tutte le flashcard!');
-  }
-}
+                const difficulty = event.target.dataset.difficulty;
 
-document.getElementById('buttons').addEventListener('click', function(event) {
-  if (event.target.classList.contains('btn-difficulty')) {
-    const difficultyIndex = Array.from(event.target.parentNode.parentNode.children).indexOf(event.target.parentNode);
-    onDifficultyClick(difficultyIndex);
-  }
+
+                currentCardIndex++;
+                if (currentCardIndex < flashcards.length) {
+                    showFrontOfCard(currentCardIndex, flashcards);
+                } else {
+                   document.querySelector('.card-body').innerHTML = `<p class="card-text">Le flashcard sono finite!</p>`
+                }
+            }
+        });
+    }
 });
 
-window.onload = function() {
-  getFlashcards();
-};
+function showFrontOfCard(index, flashcards) {
+    document.getElementById('frontCard').textContent = flashcards[index].front;
+    document.getElementById('backCard').classList.add('hidden');
+    document.getElementById('buttons').innerHTML = `
+        <button class="btn btn-primary btn-lg" id="showAnswer">Show Answer</button>
+    `;
+}
+
+function showBackOfCard(index, flashcards) {
+    document.getElementById('backCard').innerHTML = flashcards[index].back;
+    document.getElementById('backCard').classList.remove('hidden');
+    document.getElementById('buttons').innerHTML = `
+        <button class="btn btn-primary btn-lg difficulty me-3" data-difficulty="hard">Hard</button>
+        <button class="btn btn-primary btn-lg difficulty me-3" data-difficulty="medium">Medium</button>
+        <button class="btn btn-primary btn-lg difficulty" data-difficulty="easy">Easy</button>
+    `;
+}
+
+
+
+
+async function getFlashcards(deckId) {
+    try {
+        const response = await fetch(`/api/v1/decks/${deckId}`);
+        if (!response.ok) {
+            throw new Error('Error fetching flashcards');
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching flashcards:', error);
+        return [];
+    }
+}

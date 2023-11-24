@@ -5,14 +5,62 @@
 <!-- Navbar  -->
 <nav th:replace="fragments/navbar.html :: navbar"></nav>
 <!-- Main -->
-<main class="container d-flex justify-content-center align-items-center flex-column">
-    <h1>Search</h1>
-    <form class="d-flex" role="search">
-        <div class="input-group">
-            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch">
-            <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+<main class="container-xl mt-5">
+    <div class="row">
+        <h1>Decks</h1>
+    </div>
+    <div class="row light-bottom-border">
+        <div th:if="${decks.isEmpty()}" class="col-12">
+            <p>No decks found.</p>
         </div>
-    </form>
+        <div class="col-lg-4 col-md-6 col-sm-6 col-12" th:each="deck : ${decks}">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-title" th:text="${deck.name}"></h5>
+                        <p th:text="${deck.flashcards.size()} + ' cards'"></p>
+                    </div>
+                    <p class="card-text" th:text="${deck.description}"></p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <a class="btn btn-secondary mr-1" th:href="@{/decks/{id}(id=${deck.id})}">View</a>
+                            <a class="btn btn-primary" th:href="@{/decks/study/{id}(id=${deck.id})}">Study</a>
+                        </div>
+                        <div>
+                            <form th:action="@{/decks/delete/{id}(id=${deck.id})}" method="post">
+                                <button type="submit" class="btn btn-danger">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <h1>Cards</h1>
+    </div>
+    <div class="row">
+        <div th:if="${cards.isEmpty()}" class="col-12">
+            <p>No flashcards found.</p>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6 col-12" th:each="card : ${cards}">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <p class="card-text" th:text="${card.front}"></p>
+                    <div class="d-flex justify-content-end">
+                        <a th:href="@{/cards/edit/{id}(id=${card.id})}" class="btn btn-secondary me-1">Edit</a>
+                        <form th:action="@{/cards/delete/{id}(id=${card.id})}" method="post">
+                            <button type="submit" class="btn btn-danger">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 <!-- Footer -->
 <footer th:replace="fragments/footer.html :: footer"></footer>
